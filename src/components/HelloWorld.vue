@@ -18,13 +18,15 @@ export default {
   },
   methods: {
     login: function () {
-      // let vm = this
+      let vm = this
       let params = {
         username: this.username,
         password: this.password
       }
       this.$http.post('api/login', params).then(function (res) {
-        console.log(res)
+        if (res.data.code === 200) {
+          vm.$router.push({name: 'home'})
+        }
       })
     }
   }

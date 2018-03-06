@@ -2,33 +2,53 @@
   <div>
     <input type="text" key="username" v-model="username">
     <input type="password" key="password" v-model="password">
-    <button v-on:click="login">登录</button>
+    <button v-on:click="login()">登录</button>
+    <pagination
+      :page-index="pageConf.currentPage"
+      :total="pageConf.totalNum"
+      :page-size="pageConf.perPage"
+      @change="pageChange"
+    ></pagination>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-      username: '',
-      password: ''
-    }
-  },
-  methods: {
-    login: function () {
-      let params = {
-        username: this.username,
-        password: this.password
-      }
-      this.$http.post('api/login', params).then((res) => {
-        if (res.data.code === 200) {
-          this.$router.push({name: 'home'})
+  import pagination from './pagination'
+
+  export default {
+    components: {
+      pagination
+    },
+    name: 'HelloWorld',
+    data () {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+        username: '',
+        password: '',
+        pageConf: {
+          perPage: 10,
+          currentPage: 1,
+          totalNum: 1
         }
-      })
+      }
+    },
+    methods: {
+      login: function () {
+        let params = {
+          username: this.username,
+          password: this.password
+        }
+        this.$http.post('api/login', params).then((res) => {
+          if (res.data.code === 200) {
+            this.$router.push({name: 'home'})
+          }
+        })
+      },
+      pageChange (page) {
+        this.pageConf.currentPage = page
+        //
+      }
     }
-  }
 }
 </script>
 

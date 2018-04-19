@@ -13,48 +13,49 @@
 </template>
 
 <script>
-  import pagination from './pagination'
+import pagination from "./pagination";
 
-  export default {
-    components: {
-      pagination
-    },
-    name: 'HelloWorld',
-    data () {
-      return {
-        msg: 'Welcome to Your Vue.js App',
-        username: '',
-        password: '',
-        pageConf: {
-          perPage: 10,
-          currentPage: 1,
-          totalNum: 1
-        }
+export default {
+  components: {
+    pagination
+  },
+  name: "HelloWorld",
+  data() {
+    return {
+      msg: "Welcome to Your Vue.js App",
+      username: "",
+      password: "",
+      pageConf: {
+        perPage: 10,
+        currentPage: 1,
+        totalNum: 1
       }
-    },
-    methods: {
-      login: function () {
-        let params = {
-          username: this.username,
-          password: this.password
+    };
+  },
+  methods: {
+    login: function() {
+      let params = {
+        username: this.username,
+        password: this.password
+      };
+      this.$http.post("api/login", params).then(res => {
+        if (res.data.code === 200) {
+          this.$router.push({ name: "home" });
         }
-        this.$http.post('api/login', params).then((res) => {
-          if (res.data.code === 200) {
-            this.$router.push({name: 'home'})
-          }
-        })
-      },
-      pageChange (page) {
-        this.pageConf.currentPage = page
-        //
-      }
+      });
+    },
+    pageChange(page) {
+      this.pageConf.currentPage = page;
+      //
     }
-}
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

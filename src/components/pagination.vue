@@ -9,7 +9,7 @@
     <a class="item more" v-if="showPrevMore">
       ...
     </a>
-    <a class="item" v-for="page in pagers" :class="{active: index == page}" @click="go(page)">
+    <a class="item" v-for="page in pagers" :key="page" :class="{active: index == page}" @click="go(page)">
       {{page}}
     </a>
     <a class="item more" v-if="showNextMore">
